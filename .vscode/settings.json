@@ -1,0 +1,66 @@
+{
+  // Auto-activate the Poetry virtualenv in integrated terminal
+  "python.terminal.activateEnvironment": true,
+  // Use Poetry as the env and package manager for the Python extension
+  "python-envs.defaultEnvManager": "ms-python.python:poetry",
+  "python-envs.defaultPackageManager": "ms-python.python:poetry",
+
+  // Stop the file watcher from monitoring generated/heavy dirs.
+  // Reduces CPU and memory. Does NOT inherit from files.exclude — must duplicate manually.
+  "files.watcherExclude": {
+    "**/.venv/**": true,
+    "**/__pycache__/**": true,
+    "**/.poetry/**": true,
+    "**/data/**": true,
+    "**/.ruff_cache/**": true,
+    "**/.pyright/**": true,
+    "**/.pytest_cache/**": true
+  },
+
+  // Hide folders from the explorer sidebar and Quick Open.
+  // Also propagates to search.exclude — anything here is automatically excluded from search.
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.poetry": true
+  },
+
+  // Extra exclusions for Ctrl+Shift+F search only.
+  // No need to repeat .gitignore entries (search.useIgnoreFiles defaults to true)
+  // or files.exclude entries (search inherits from it).
+  "search.exclude": {
+    "**/poetry.lock": true
+  },
+
+  // Wider tree indentation for better readability
+  "workbench.tree.indent": 18,
+  // Highlight the active bracket pair
+  "editor.guides.bracketPairs": "active",
+
+  // Auto-save files after 1 second of inactivity (default delay: 1000ms)
+  "files.autoSave": "afterDelay",
+
+  // Strip trailing spaces on save
+  "files.trimTrailingWhitespace": true,
+  // Ensure newline at end of file
+  "files.insertFinalNewline": true,
+  // Remove extra blank lines at end of file
+  "files.trimFinalNewlines": true,
+
+  // Activity bar as horizontal tabs at top
+  "workbench.activityBar.location": "top",
+  // Disable minimap to reclaim horizontal space
+  "editor.minimap.enabled": false,
+
+  // Group files by extension in explorer
+  "explorer.sortOrder": "type",
+  // Show each folder on its own line instead of collapsing a/b/c
+  "explorer.compactFolders": false,
+
+  // Richer syntax coloring using Pylance's type analysis (no extra perf cost — Pylance already does the work)
+  "editor.semanticHighlighting.enabled": true,
+
+  // Use Ruff as the default Python formatter
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  }
+}

@@ -1,0 +1,100 @@
+line-length = 120
+target-version = "py314"
+
+[lint]
+select = [
+    "E",  # pycodestyle - error
+    "W",  # pycodestyle - warning
+    "D", # pydocstyle
+    "F",  # Pyflakes
+    "PL", # PyLint
+    "UP",  # pyupgrade
+    "N", # pep-8 naming
+    "I",  # isort
+    "PERF", # Perflint
+    "RUF", # ruff-specific rules
+
+    # --- flake-8 ---
+    "ARG", # flake8-unused-arguments
+    "SIM",  # flake8-simplify
+    "A", # flake8-builtins
+    "C4", # flake8-comprehensions
+    "ANN", # flake8-annotations
+    "PYI", # flake8-pyi
+    "FBT", # flake8-boolean-trap
+    "PT", # flake8-pytest-style
+    "ISC", # flake8-implicit-str-concat
+    "ICN", # flake8-import-conventions
+    "PIE", # flake8-pie
+    "T20", # flake8-print
+    "RET", # flake8-return
+    "TID", # flake8-tidy-imports
+    "TCH", # flake8-type-checking
+    "S", # flake8-bandit (security)
+    "B", # flake8-bugbear
+]
+
+ignore = [
+    "E501", # line-too-long
+    "ISC001", # single-line-implicit-string-concatenation
+
+    # --- Docstring ---
+    "D100", # undocumented-public-module
+    "D205", # blank-line-after-summary
+    "D401", # non-imperative-mood
+    "D107", # undocumented-public-init
+]
+
+extend-safe-fixes = ["C", "D", "A", "W291"]
+
+[lint.pylint]
+max-args = 8
+
+[lint.pydocstyle]
+convention = "google"
+
+[lint.extend-per-file-ignores]
+"**/__init__.py" = ["D"]
+"**/tests/**" = [
+    "D",       # docstrings
+    "ANN",     # type annotations
+    "ARG",     # unused arguments (fixtures)
+    "FBT",     # boolean traps (test parametrize)
+    "PLR2004", # magic values
+    "S101",    # assert usage
+]
+"**/*.ipynb" = [
+    "T201",    # print statements
+    "ANN",     # type annotations
+    "D",       # docstrings
+    "PLC0415", # import not at top level
+    "F821",    # undefined name (cross-cell refs)
+    "E701",    # multiple statements on one line
+    "E402",    # module-level import not at top of cell
+    "F404",    # future import not at beginning (multi-cell notebooks)
+    "PLR2004", # magic values (exploratory code)
+    "PLR0913", # too many arguments
+    "ARG002",  # unused method arguments (interface methods)
+    "TC002",   # type-checking imports (notebooks import at runtime)
+]
+
+
+[format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
+exclude = [
+    # Rules conflicting with the linter
+    "E111",  # indentation-with-invalid-multiple
+    "E114",  # indentation-with-invalid-multiple-comment
+    "E117",  # over-indented
+    "D300",  # triple-single-quotes
+    "Q000",  # bad-quotes-inline-string
+    "Q001",  # bad-quotes-multiline-string
+    "Q002",  # bad-quotes-docstring
+    "Q003",  # avoidable-escaped-quote
+    "COM812",  # missing-trailing-comma
+    "COM819",  # prohibited-trailing-comma
+    "ISC001",  # single-line-implicit-string-concatenation
+    "ISC002"   # multi-line-implicit-string-concatenation
+]

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - run: pip install poetry
+      - run: poetry config virtualenvs.in-project true
+
+      - uses: actions/cache@v5
+        with:
+          path: .venv
+          key: venv-${{ hashFiles('poetry.lock') }}
+          restore-keys: venv-
+
+      - run: poetry install
+      - run: poetry run ruff check .
+      - run: poetry run ruff format --check .
+      - uses: jakebailey/pyright-action@v3
+        with:
+          version: '1.1.408'
+          python-path: .venv/bin/python
+          verbose: true
+      - run: poetry check --lock
+
+  commit-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: pip install gitlint
+      - run: echo "${{ github.event.pull_request.title }}" | gitlint --msg-filename /dev/stdin
