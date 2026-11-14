@@ -1,8 +1,8 @@
 [project]
-name = "python-project-template"
+name = "villager-test-bench"
 version = "0.1.0"
 description = ""
-authors = [ { name = "Your Name", email = "firstname.lastname@example.com" } ]
+authors = [ { name = "Maxime Gatineau", email = "gatineau.mx@gmail.com" } ]
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.14,<4.0"
@@ -32,12 +32,6 @@ gitlint = "^0.19.0"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
-
-[tool.coverage.run]
-source = ["app"]
-
-[tool.coverage.report]
-fail_under = 80
 
 [tool.pyright]
 pythonVersion = "3.14"

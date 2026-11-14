@@ -20,10 +20,6 @@ htmlcov/
 .mypy_cache/
 .pyright/
 
-# Data
-data/*
-!data/.gitkeep
-
 # Notebooks
 .ipynb_checkpoints/
 
