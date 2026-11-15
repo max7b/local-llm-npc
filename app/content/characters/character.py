@@ -1,8 +1,14 @@
+import json
 from enum import Enum
+from typing import TYPE_CHECKING
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, ValidationError
 
 from app.content.game_assets.vendor import VendorType
+from app.core.logger import LOGGING
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 class BaseModelLLMDocstrings(BaseModel):
@@ -148,3 +154,24 @@ class Character(BaseModel):
     occupation: VendorType
     name: str
     identity: CharacterIdentity
+
+
+def load_character(path: str | Path) -> Character:
+    """Load and validate the Character's settings file.
+
+    Args:
+        path (str | Path): Path to the character settings JSON file.
+
+    Returns:
+        Character: The validated character.
+    """
+    with open(path) as character_path:
+        character_json = json.load(character_path)
+
+    try:
+        character = Character.model_validate(character_json)
+    except ValidationError as e:
+        LOGGING.error(e)
+        raise
+
+    return character
