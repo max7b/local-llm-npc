@@ -11,3 +11,6 @@ llama serve
 ```
 
 
+## DATA :
+
+GameAssets are taken from [welevel/GameAssets](https://github.com/welevel/GameAssets).
