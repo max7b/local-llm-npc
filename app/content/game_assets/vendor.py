@@ -1,4 +1,5 @@
 import json
+from enum import Enum
 from typing import TYPE_CHECKING
 
 from pydantic import BaseModel, ConfigDict, ValidationError
@@ -8,6 +9,20 @@ from app.core.logger import LOGGING
 
 if TYPE_CHECKING:
     from pathlib import Path
+
+
+class VendorType(Enum):
+    """Occupations in the GameAssets vendor settings."""
+
+    BLACKSMITH = "Blacksmith"
+    CARPENTER = "Carpenter"
+    COOK = "Cook"
+    FARMER = "Farmer"
+    HUNTER = "Hunter"
+    JEWLER = "Jewler"
+    TAILOR = "Tailor"
+    BREEDER = "Breeder"
+    WARRIOR = "Warrior"
 
 
 class BaseModelAlias(BaseModel):

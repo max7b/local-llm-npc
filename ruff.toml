@@ -50,6 +50,9 @@ extend-safe-fixes = ["C", "D", "A", "W291"]
 [lint.pylint]
 max-args = 8
 
+[lint.flake8-type-checking]
+runtime-evaluated-base-classes = ["pydantic.BaseModel"]
+
 [lint.pydocstyle]
 convention = "google"
 
