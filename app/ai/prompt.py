@@ -79,7 +79,7 @@ if __name__ == "__main__":
     path_character_blacksmith = f"{DATA_DIR}/characters/blacksmith.json"
     character_blacksmith = load_character(path=path_character_blacksmith)
 
-    prompt_path = f"{BASEDIR}/app/ai/prompt.txt"
+    prompt_path = f"{BASEDIR}/app/ai/tmp/prompt.txt"
 
     character_prompt = get_character_prompt(character=character_blacksmith)
 

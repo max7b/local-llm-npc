@@ -23,6 +23,9 @@ htmlcov/
 # Notebooks
 .ipynb_checkpoints/
 
+# Conversations memory
+data/conversations/
+
 # IDE
 .idea/
 
