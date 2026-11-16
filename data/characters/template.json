@@ -1,0 +1,32 @@
+{
+    "type": "NPC",
+    "occupation": "Blacksmith",
+    "name": "",
+    "identity": {
+        "flat_description": "",
+        "appearance": [],
+        "capabilities": [],
+        "personality": {
+            "traits": [],
+            "ideal": "",
+            "flaw": "",
+            "wants": [],
+            "refusal_style": "",
+            "attitude": ""
+        },
+        "knowledge": {
+            "knows": [],
+            "does_not_know": []
+        },
+        "voice": {
+            "speaking_style": "",
+            "mannerism": null,
+            "never_says": null
+        },
+        "story": {
+            "backstory": "",
+            "bonds": [],
+            "secret": null
+        }
+    }
+}

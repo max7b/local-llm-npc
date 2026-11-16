@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.content.characters.character import Character, load_character
+from app.content.characters.character import Character
 
 
 def get_character_prompt(character: Character) -> str:

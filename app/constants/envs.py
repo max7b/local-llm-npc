@@ -6,6 +6,8 @@ from app.constants.paths import BASEDIR
 class Settings(BaseSettings):
     """Application settings loaded from environment variables and .env file."""
 
+    LLAMACPP_URL: str = "http://localhost:9931/v1/chat/completions"
+
     model_config = SettingsConfigDict(
         env_file=BASEDIR / ".env",
         env_file_encoding="utf-8",
