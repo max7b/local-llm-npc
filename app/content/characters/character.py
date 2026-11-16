@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from pydantic import BaseModel, ConfigDict, ValidationError
 
-from app.content.game_assets.vendor import VendorType
+from app.constants.vendor import VendorType
 from app.core.logger import LOGGING
 
 if TYPE_CHECKING:

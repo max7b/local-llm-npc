@@ -15,9 +15,14 @@ def get_character_prompt(character: Character) -> str:
     model_properties = character.model_json_schema()["properties"]
     character_occupation = character.occupation.value
     character_name = character.name
+    character_type = character.type.value
 
     # Starts with one line that gives the character's name and occupation
     prompt = f"You are {character_name} a {character_occupation}.\n"
+    prompt += f"""You are a {character_type} in a video game.
+    You will be interacting with other NPCs and players. You must be role-playing this character.
+    Below is your character sheet.
+    """
 
     # Adds every section of the character sheet
     for key in model_properties:
@@ -25,6 +30,7 @@ def get_character_prompt(character: Character) -> str:
         if isinstance(model_attribute, BaseModel):
             prompt += convert_pydantic_model_to_prompt_string(model=model_attribute)
 
+    prompt += "Now stay in character and answer the other person."
     return prompt
 
 
@@ -59,7 +65,7 @@ def convert_pydantic_model_to_prompt_string(model: BaseModel) -> str:
             :::Description:::
             {property_description}
             :::Value:::
-            {model_attribute}
+            {model_attribute if isinstance(model_attribute, str) else "\n".join([f"- {list_item}" for list_item in model_attribute]) if isinstance(model_attribute, list) else ""}
             </{property_title}>
             """
     prompt += f"</{model_title}>\n"
@@ -67,12 +73,15 @@ def convert_pydantic_model_to_prompt_string(model: BaseModel) -> str:
 
 
 if __name__ == "__main__":
-    from app.constants.paths import DATA_DIR
+    from app.constants.paths import BASEDIR, DATA_DIR
     from app.content.characters.character import load_character
-    from app.core.logger import LOGGING
 
     path_character_blacksmith = f"{DATA_DIR}/characters/blacksmith.json"
     character_blacksmith = load_character(path=path_character_blacksmith)
 
+    prompt_path = f"{BASEDIR}/app/ai/prompt.txt"
+
     character_prompt = get_character_prompt(character=character_blacksmith)
-    LOGGING.info(character_prompt)
+
+    with open(prompt_path, "w", encoding="utf-8") as file:
+        file.write(character_prompt)

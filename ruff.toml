@@ -52,6 +52,7 @@ max-args = 8
 
 [lint.flake8-type-checking]
 runtime-evaluated-base-classes = ["pydantic.BaseModel"]
+runtime-evaluated-decorators = ["fastapi.APIRouter.post"]
 
 [lint.pydocstyle]
 convention = "google"
