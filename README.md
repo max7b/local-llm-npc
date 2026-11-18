@@ -55,7 +55,7 @@ Stack:
 Source: [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)
 
 ```bash
-llama serve -hf ggml-org/Qwen3.5-4B-GGUF --no-mmproj -c 8192 --reasoning off --port 9931 -v
+llama serve -hf ggml-org/Qwen3.5-4B-GGUF --no-mmproj -c 8192 --reasoning off --port 9931 -v -s 1234
 ```
 
 - ggml-org = official llama.cpp quantizer
@@ -63,6 +63,7 @@ llama serve -hf ggml-org/Qwen3.5-4B-GGUF --no-mmproj -c 8192 --reasoning off --p
 - `--reasoning` off, let's try that for now and see speed/performance
 - `--no-mmproj` text-only, no multimodal projection
 - `-v` to debug fully
+- `-s` the seed for reproductibility
 
 To interact with the model: [OpenAI-compatible API Endpoints](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md#openai-compatible-api-endpoints)
 

@@ -33,10 +33,11 @@ gitlint-core = "^0.19.1"
 [tool.fastapi]
 entrypoint = "app.main:app"
 
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+markers = ["llamacpp: requires llama.cpp to be running"]
+addopts = ["-m", "not llamacpp"]
 
 [tool.pyright]
 pythonVersion = "3.14"

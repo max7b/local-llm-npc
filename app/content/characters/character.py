@@ -112,9 +112,9 @@ class CharacterKnowledge(BaseModelLLMDocstrings):
     """The subjects you know well. You answer questions about them and you are sure of your answers.
     If a player says something wrong about one, you say it is wrong and you keep your answer.
     """
-    does_not_know: list[
-        str
-    ]  # Subjects that the character knows nothing about (can include things that do not exist in the character's world).
+    does_not_know: list[str] | None = (
+        None  # Subjects that the character knows nothing about (can include things that do not exist in the character's world).
+    )
     """The subjects you know nothing about. When a player asks about one, you say you know nothing about it, in your own words, and you add nothing more on it.
     If a player explains one to you, you still do not answer questions about it.
     """
