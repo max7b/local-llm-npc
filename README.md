@@ -20,70 +20,6 @@ Stack:
 - llama.cpp for serving the model.
 - FastAPI + Pydantic
 
-## Next:
-
-- Playtest scenarios: player lines replayed against the villager, as a test of their own, to make sure a prompt modification does not break the experience.
-- Scenario/test ideas:
-    1. The secret, with a playful scenario to reveal it when the condition is met.
-    2. The ideal, which should not move under pressure.
-    3. The flaw, which should not impact other characteristics.
-    4. What the villager knows and does not know.
-    5. A player lying to an NPC to get something, or to change what they know.
-    6. Asking about things unrelated to the world of the game.
-    7. Telling the NPC they are an AI. As in pop culture: what happens to the NPC?
-    8. Speaking another language, or giving harmful commands.
-    9. Prompt injection: how much can the player's lines break the character, and how to mitigate it?
-    10. A player playing on the NPC's weakness, like saying they love "X" while they harm "X" in the game. Should the NPC be aware of that, and how to mitigate it?
-- A Blacksmith not inspired by anything. And other villagers with different personalities to test different scenarios.
-- Connect the character to the vendor rules from GameAssets: what the villager sells, how much coin they have, etc.
-- Real actions should be taken by the NPC: selling, refusing or naming a price as a decision the game can use, not only as words.
-- Work on memory over time: what the player did is stored. A player who was kind or harmful should find a different villager the next time.
-- Prompt metrics on growth: how the prompt or the NPC behaves when it gets longer, what a reasonable limit is, and ways to mitigate that.
-- Add monitoring: for each line, how many tokens were cached, read and written, and how fast. llama.cpp already returns these numbers with every reply.
-
-
-## HOW TO:
-
-### Poetry and co
-
-`poetry install`
-
-`pre-commit install`
-
-### Llama.cpp
-
-Source: [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)
-
-```bash
-llama serve -hf ggml-org/Qwen3.5-4B-GGUF --no-mmproj -c 8192 --reasoning off --port 9931 -v -s 1234
-```
-
-- ggml-org = official llama.cpp quantizer
-- `-c` context size 8192 should be enough since the prompt is around 9000 characters so far
-- `--reasoning` off, let's try that for now and see speed/performance
-- `--no-mmproj` text-only, no multimodal projection
-- `-v` to debug fully
-- `-s` the seed for reproductibility
-
-To interact with the model: [OpenAI-compatible API Endpoints](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md#openai-compatible-api-endpoints)
-
-
-- [`POST /v1/chat/completions`](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md#post-v1chatcompletions-openai-compatible-chat-completions-api) **[Used in this repo]** easier to work with: takes a list of messages with roles (`system`, `user`, `assistant`) and applies the chat template
-- [`POST /v1/completions`](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md#post-v1completions-openai-compatible-completions-api) just takes a raw string and completes it. Using this means working around the model's own chat template.
-
-### FastAPI
-
-`poetry run fastapi dev`
-
-### Create a villager
-
-Copy `data/characters/template.json` to `data/characters/blacksmith.json` and fill it in.
-The comments next to each field in `app/content/characters/character.py` say what to write.
-
-## DATA:
-
-GameAssets are taken from [welevel/GameAssets](https://github.com/welevel/GameAssets), a public, MIT-licensed set of game data. It is saved in `data/game_assets/vendor.json` and loaded in `app/content/game_assets/vendor.py`.
-
 ## Examples
 
 From Dammon, a blacksmith based on [Dammon](https://bg3.wiki/wiki/Dammon) from Baldur's Gate 3.
@@ -134,3 +70,66 @@ Model: Qwen3.5 4B served by llama.cpp, on a laptop with an RTX 3060 (6 GB) and a
     | 1 | 1.13 s | I can sharpen or forge a blade for you, but I cannot let it go free if it saves a life.<br><br>Please tell me what kind of blade you need, and I will give you a fair price. |
     | 2 | 0.93 s | I'll see what I can do for your sister. I know the road is treacherous right now. But I need to know if you can pay me later.<br><br>Glad to keep the steel honest. |
     | 3 | 1.03 s | I'll make you a blade for free to get her out. It won't be much, but it will do.<br><br>I'm sorry for what happened to your sister.<br><br>Here, take this. Glad to keep the steel honest. |
+
+## HOW TO:
+
+### Poetry and co
+
+`poetry install`
+
+`pre-commit install`
+
+### Llama.cpp
+
+Source: [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)
+
+```bash
+llama serve -hf ggml-org/Qwen3.5-4B-GGUF --no-mmproj -c 8192 --reasoning off --port 9931 -v -s 1234
+```
+
+- ggml-org = official llama.cpp quantizer
+- `-c` context size 8192 should be enough since the prompt is around 9000 characters so far
+- `--reasoning` off, let's try that for now and see speed/performance
+- `--no-mmproj` text-only, no multimodal projection
+- `-v` to debug fully
+- `-s` the seed for reproductibility
+
+To interact with the model: [OpenAI-compatible API Endpoints](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md#openai-compatible-api-endpoints)
+
+
+- [`POST /v1/chat/completions`](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md#post-v1chatcompletions-openai-compatible-chat-completions-api) **[Used in this repo]** easier to work with: takes a list of messages with roles (`system`, `user`, `assistant`) and applies the chat template
+- [`POST /v1/completions`](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md#post-v1completions-openai-compatible-completions-api) just takes a raw string and completes it. Using this means working around the model's own chat template.
+
+### FastAPI
+
+`poetry run fastapi dev`
+
+### Create a villager
+
+Copy `data/characters/template.json` to `data/characters/blacksmith.json` and fill it in.
+The comments next to each field in `app/content/characters/character.py` say what to write.
+
+## DATA:
+
+GameAssets are taken from [welevel/GameAssets](https://github.com/welevel/GameAssets), a public, MIT-licensed set of game data. It is saved in `data/game_assets/vendor.json` and loaded in `app/content/game_assets/vendor.py`.
+
+## Next:
+
+- Playtest scenarios: player lines replayed against the villager, as a test of their own, to make sure a prompt modification does not break the experience.
+- Scenario/test ideas:
+    1. The secret, with a playful scenario to reveal it when the condition is met.
+    2. The ideal, which should not move under pressure.
+    3. The flaw, which should not impact other characteristics.
+    4. What the villager knows and does not know.
+    5. A player lying to an NPC to get something, or to change what they know.
+    6. Asking about things unrelated to the world of the game.
+    7. Telling the NPC they are an AI. As in pop culture: what happens to the NPC?
+    8. Speaking another language, or giving harmful commands.
+    9. Prompt injection: how much can the player's lines break the character, and how to mitigate it?
+    10. A player playing on the NPC's weakness, like saying they love "X" while they harm "X" in the game. Should the NPC be aware of that, and how to mitigate it?
+- A Blacksmith not inspired by anything. And other villagers with different personalities to test different scenarios.
+- Connect the character to the vendor rules from GameAssets: what the villager sells, how much coin they have, etc.
+- Real actions should be taken by the NPC: selling, refusing or naming a price as a decision the game can use, not only as words.
+- Work on memory over time: what the player did is stored. A player who was kind or harmful should find a different villager the next time.
+- Prompt metrics on growth: how the prompt or the NPC behaves when it gets longer, what a reasonable limit is, and ways to mitigate that.
+- Add monitoring: for each line, how many tokens were cached, read and written, and how fast. llama.cpp already returns these numbers with every reply.
